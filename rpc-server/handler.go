@@ -82,6 +82,10 @@ func (s *IMServiceImpl) Pull(ctx context.Context, req *rpc.PullRequest) (*rpc.Pu
 	}
 
 	limit := int64(req.GetLimit())
+	if limit <= 0 {
+		limit = 10
+	}
+
     start := req.GetCursor()
     end := start + limit
 
