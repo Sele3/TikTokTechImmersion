@@ -16,19 +16,66 @@
 
 ## Development Environment
 To work on this project, make sure you have the following development environment set up:
-
-- Golang 
 - Docker 
+
+## Available Endpoints
+
+The application exposes the following endpoints for sending and retrieving messages:
+
+### Send Message
+
+Send a message to a specific chat room.
+
+- **URL:** `POST /api/send`
+- **Request Body:**
+
+```json
+{
+    "chat": "user1:user2",
+    "text": "message-text",
+    "sender": "user1"
+}
+```
+
+### Pull Messages
+
+Retrieve messages from a chat room.
+
+- **URL:** `GET /api/pull`
+- **Request Parameters:**
+
+  - `chat`: Chat room identifier
+  - `cursor`: Starting position of messages 
+  - `limit`: Maximum number of messages to retrieve
+  - `reverse`: Whether to sort messages in reverse order 
+
+- **Response Body:**
+
+```json
+{
+    "messages": [
+        {
+            "chat": "chat-room-id",
+            "text": "message-text",
+            "sender": "sender-identifier",
+            "send_time": 0
+        },
+        ...
+    ],
+    "has_more": true,
+    "next_cursor": 0
+}
+```
 
 ## Issue: Docker Error due to Line Encoding
 When running the command `docker-compose up -d`, an error occurred when executing the line `RUN sh ./build.sh`.
 
 ### Root Cause Analysis
-This issue is related to line encodings. In VS Code, when CLRF (Carriage Return Line Feed) line ending format is used, it causes compatibility issues with the shell script.
+This issue is related to line encodings. When CLRF (Carriage Return Line Feed) line ending format is used, it causes compatibility issues with the shell script.
 
 ### Resolution
 To resolve this issue, follow these steps:
-1. At the bottom of VS Code, change the line encoding from CLRF to LF (Line Feed) format.
+1. Change the line encoding from CLRF to LF (Line Feed) format.
 
 If the issue persists, try the following steps:
 1. Run the following command to change the git config input:
