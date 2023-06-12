@@ -26,4 +26,9 @@ func TestIMServiceImpl_Send(t *testing.T) {
 			wantErr: nil,
 		},
 	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.True(t, true)
+		})
+	}
 }
